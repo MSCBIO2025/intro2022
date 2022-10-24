@@ -1,36 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8" />
+<head>
 
-<title>web</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+
+<title>web slides</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
+<!-- General and theme style sheets -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/reveal.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/theme/simple.css" id="theme">
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
-(function() {
-  function addWidgetsRenderer() {
-    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
-    var scriptElement = document.createElement('script');
-    var widgetRendererSrc = '@jupyter-widgets/html-manager@*/dist/embed-amd.js';
-    var widgetState;
+if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+}
 
-    // Fallback for older version:
-    try {
-      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
-
-      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
-        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
-      }
-    } catch(e) {}
-
-    scriptElement.src = widgetRendererSrc;
-    document.body.appendChild(scriptElement);
-  }
-
-  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
-}());
 </script>
+
+<!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/lib/js/html5shiv.js"></script>
+<![endif]-->
+
+<!-- Loading the mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration -->
+
+<!-- Get Font-awesome from cdn -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
 <style type="text/css">
     /*!
@@ -13044,59 +13072,133 @@ ul.typeahead-list  > li > a.pull-right {
 
 <style type="text/css">
 /* Overrides of notebook CSS for static HTML export */
-body {
-  overflow: visible;
-  padding: 8px;
+.reveal {
+  font-size: 160%;
 }
-
-div#notebook {
-  overflow: visible;
-  border-top: none;
-}@media print {
-  div.cell {
-    display: block;
-    page-break-inside: avoid;
-  } 
-  div.output_wrapper { 
-    display: block;
-    page-break-inside: avoid; 
-  }
-  div.output { 
-    display: block;
-    page-break-inside: avoid; 
-  }
+.reveal pre {
+  width: inherit;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}
+.reveal pre code {
+  padding: 0px;
+}
+.reveal section img {
+  border: 0px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+.reveal i {
+  font-style: normal;
+  font-family: FontAwesome;
+  font-size: 2em;
+}
+.reveal .slides {
+  text-align: left;
+}
+.reveal.fade {
+  opacity: 1;
+}
+.reveal .progress {
+  position: static;
+}
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-left.enabled {
+  border-right-color: #727272;
+}
+.reveal .controls .navigate-left.enabled:hover,
+.reveal .controls .navigate-left.enabled.enabled:hover {
+  border-right-color: #dfdfdf;
+}
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-right.enabled {
+  border-left-color: #727272;
+}
+.reveal .controls .navigate-right.enabled:hover,
+.reveal .controls .navigate-right.enabled.enabled:hover {
+  border-left-color: #dfdfdf;
+}
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-up.enabled {
+  border-bottom-color: #727272;
+}
+.reveal .controls .navigate-up.enabled:hover,
+.reveal .controls .navigate-up.enabled.enabled:hover {
+  border-bottom-color: #dfdfdf;
+}
+.reveal .controls .navigate-down,
+.reveal .controls .navigate-down.enabled {
+  border-top-color: #727272;
+}
+.reveal .controls .navigate-down.enabled:hover,
+.reveal .controls .navigate-down.enabled.enabled:hover {
+  border-top-color: #dfdfdf;
+}
+.reveal .progress span {
+  background: #727272;
+}
+div.input_area {
+  padding: 0.06em;
+}
+div.code_cell {
+  background-color: transparent;
+}
+div.prompt {
+  width: 11ex;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  text-align: right;
+}
+div.output_area pre {
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+}
+div.output_prompt {
+  /* 5px right shift to account for margin in parent container */
+  margin: 5px 5px 0 0;
+}
+div.text_cell.rendered .rendered_html {
+  /* The H1 height seems miscalculated, we are just hidding the scrollbar */
+  overflow-y: hidden;
+}
+a.anchor-link {
+  /* There is still an anchor, we are only hidding it */
+  display: none;
+}
+.rendered_html p {
+  text-align: inherit;
+}
+::-webkit-scrollbar
+{
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar *
+{
+  background:transparent;
+}
+::-webkit-scrollbar-thumb
+{
+  background: #727272 !important;
 }
 </style>
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
 <link rel="stylesheet" href="custom.css">
 
-<!-- Loading mathjax macro -->
-<!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
-    <!-- MathJax configuration -->
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-            processEscapes: true,
-            processEnvironments: true
-        },
-        // Center justify equations in code and markdown cells. Elsewhere
-        // we use CSS to left justify single line equations in code cells.
-        displayAlign: 'center',
-        "HTML-CSS": {
-            styles: {'.MathJax_Display': {"margin": 0}},
-            linebreaks: { automatic: true }
-        }
-    });
-    </script>
-    <!-- End of mathjax configuration --></head>
-<body>
-  <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
+</head>
 
+
+<body>
+
+
+<div class="reveal">
+<div class="slides">
+<section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13104,118 +13206,7 @@ div#notebook {
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://bits.csb.pitt.edu/asker.js/lib/asker.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="p">.</span><span class="nc">reveal</span> <span class="nt">pre</span> <span class="p">{</span> <span class="k">font-size</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-
-<span class="nx">require</span><span class="p">([</span><span class="s1">&#39;https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.js&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">Ch</span><span class="p">){</span>
- <span class="nx">Chart</span> <span class="o">=</span> <span class="nx">Ch</span><span class="p">;</span>
-<span class="p">});</span>
-
-<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;http://bits.csb.pitt.edu/asker.js/themes/asker.default.css&quot; /&gt;&#39;</span><span class="p">);</span>
-
-
-<span class="c1">//the callback is provided a canvas object and data </span>
-<span class="kd">var</span> <span class="nx">chartmaker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">canvas</span><span class="p">,</span> <span class="nx">labels</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">canvas</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
-     <span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">{</span><span class="nx">labels</span><span class="o">:</span> <span class="nx">labels</span><span class="p">,</span>                     
-    <span class="nx">datasets</span><span class="o">:</span><span class="p">[{</span>
-     <span class="nx">data</span><span class="o">:</span> <span class="nx">data</span><span class="p">,</span>
-     <span class="nx">backgroundColor</span><span class="o">:</span> <span class="s2">&quot;rgba(150,64,150,0.5)&quot;</span><span class="p">,</span>
-         <span class="nx">fillColor</span><span class="o">:</span> <span class="s2">&quot;rgba(150,64,150,0.8)&quot;</span><span class="p">,</span>    
-  <span class="p">}]};</span>
-  <span class="kd">var</span> <span class="nx">myBarChart</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Chart</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,{</span><span class="nx">type</span><span class="o">:</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span><span class="nx">data</span><span class="o">:</span><span class="nx">dataset</span><span class="p">,</span><span class="nx">options</span><span class="o">:</span><span class="p">{</span><span class="nx">legend</span><span class="o">:</span> <span class="p">{</span><span class="nx">display</span><span class="o">:</span><span class="kc">false</span><span class="p">},</span>
-        <span class="nx">scales</span><span class="o">:</span> <span class="p">{</span>
-            <span class="nx">yAxes</span><span class="o">:</span> <span class="p">[{</span>
-                <span class="nx">ticks</span><span class="o">:</span> <span class="p">{</span>
-                    <span class="nx">min</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="p">}</span>
-            <span class="p">}]}}});</span>
-<span class="p">};</span>
-
-<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.jp-InputArea .o:contains(html)&quot;</span><span class="p">).</span><span class="nx">closest</span><span class="p">(</span><span class="s1">&#39;.jp-InputArea&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
-
-
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<script src="http://bits.csb.pitt.edu/asker.js/lib/asker.js"></script>
-<style>
-.reveal pre { font-size: 100%}
-</style>
-
-<script>
-
-require(['https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.js'], function(Ch){
- Chart = Ch;
-});
-
-$('head').append('<link rel="stylesheet" href="http://bits.csb.pitt.edu/asker.js/themes/asker.default.css" />');
-
-
-//the callback is provided a canvas object and data 
-var chartmaker = function(canvas, labels, data) {
-  var ctx = $(canvas).get(0).getContext("2d");
-     var dataset = {labels: labels,                     
-    datasets:[{
-     data: data,
-     backgroundColor: "rgba(150,64,150,0.5)",
-         fillColor: "rgba(150,64,150,0.8)",    
-  }]};
-  var myBarChart = new Chart(ctx,{type:'bar',data:dataset,options:{legend: {display:false},
-        scales: {
-            yAxes: [{
-                ticks: {
-                    min: 0,
-                }
-            }]}}});
-};
-
-$(".jp-InputArea .o:contains(html)").closest('.jp-InputArea').hide();
-
-
-</script>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<center><img src='imgs/OSI_model.jpg'></center>
-</div>
-</div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13234,7 +13225,7 @@ $(".jp-InputArea .o:contains(html)").closest('.jp-InputArea').hide();
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13250,7 +13241,7 @@ $(".jp-InputArea .o:contains(html)").closest('.jp-InputArea').hide();
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13279,7 +13270,7 @@ Accept-Language: en-US,en;q=0.8
 Cookie: SelectedEdition=www; optimizelyEndUserId=oeu1364949768474r0.014468349516391754; optimizelySegments=%7B%22170962340%22%3A%22false%22%2C%22171657961%22%3A%22gc%22%2C%22172148679%22%3A%22none%22%2C%22172265329%22%3A%22search%22%7D; optimizelyBuckets=%7B%7D; s_vi=[CS]v1|25F54343051D3284-6000013900246AA6[CE]</pre>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13301,7 +13292,7 @@ Cookie: SelectedEdition=www; optimizelyEndUserId=oeu1364949768474r0.014468349516
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13329,7 +13320,7 @@ Cookie: SelectedEdition=www; optimizelyEndUserId=oeu1364949768474r0.014468349516
 
 </div>
 </div>
-</div>
+</div><div class="fragment">
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13337,71 +13328,7 @@ Cookie: SelectedEdition=www; optimizelyEndUserId=oeu1364949768474r0.014468349516
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;httpgetdata&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 500px&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;http://bits.csb.pitt.edu/asker.js/themes/asker.default.css&quot; /&gt;&#39;</span><span class="p">);</span>
-
-    <span class="kd">var</span> <span class="nx">divid</span> <span class="o">=</span> <span class="s1">&#39;#httpgetdata&#39;</span><span class="p">;</span>
-	<span class="nx">jQuery</span><span class="p">(</span><span class="nx">divid</span><span class="p">).</span><span class="nx">asker</span><span class="p">({</span>
-	    <span class="nx">id</span><span class="o">:</span> <span class="nx">divid</span><span class="p">,</span>
-	    <span class="nx">question</span><span class="o">:</span> <span class="s2">&quot;How many data items are being sent in this URL?&quot;</span><span class="p">,</span>
-		<span class="nx">answers</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">,</span><span class="s1">&#39;4&#39;</span><span class="p">],</span>
-        <span class="nx">server</span><span class="o">:</span> <span class="s2">&quot;http://bits.csb.pitt.edu/asker.js/example/asker.cgi&quot;</span><span class="p">,</span>
-		<span class="nx">charter</span><span class="o">:</span> <span class="nx">chartmaker</span><span class="p">})</span>
-    
-<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.jp-InputArea .o:contains(html)&quot;</span><span class="p">).</span><span class="nx">closest</span><span class="p">(</span><span class="s1">&#39;.jp-InputArea&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
-
-
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<div id="httpgetdata" style="width: 500px"></div>
-<script>
-$('head').append('<link rel="stylesheet" href="http://bits.csb.pitt.edu/asker.js/themes/asker.default.css" />');
-
-    var divid = '#httpgetdata';
-	jQuery(divid).asker({
-	    id: divid,
-	    question: "How many data items are being sent in this URL?",
-		answers: ['0','1','2','3','4'],
-        server: "http://bits.csb.pitt.edu/asker.js/example/asker.cgi",
-		charter: chartmaker})
-    
-$(".jp-InputArea .o:contains(html)").closest('.jp-InputArea').hide();
-
-
-</script>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
+</div></div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13439,7 +13366,7 @@ Content-Encoding: gzip
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13462,7 +13389,7 @@ Content-Encoding: gzip
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13473,27 +13400,11 @@ Content-Encoding: gzip
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://mscbio2025.github.io/intro2022/&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD XHTML 1.0 Transitional//EN&#34; &#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&#34;&gt;
@@ -13553,7 +13464,7 @@ Course policies can be found in the &lt;a href=&#34;syllabus.pdf&#34;&gt;syllabu
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13563,25 +13474,11 @@ Course policies can be found in the &lt;a href=&#34;syllabus.pdf&#34;&gt;syllabu
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fail</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;www.cnn.com&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_text output_error">
 <pre>
@@ -13639,7 +13536,7 @@ Course policies can be found in the &lt;a href=&#34;syllabus.pdf&#34;&gt;syllabu
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13648,29 +13545,11 @@ Course policies can be found in the &lt;a href=&#34;syllabus.pdf&#34;&gt;syllabu
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://pocketquery.csb.pitt.edu/pocket.cgi&#39;</span>
-<span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;json&#39;</span> <span class="p">:</span> <span class="s1">&#39;{&quot;pdbid_text&quot;:[&quot;1ycr&quot;],&quot;start&quot;:0,&quot;num&quot;:24,&quot;sort&quot;:&quot;score&quot;,&quot;dir&quot;:&quot;desc&quot;,&quot;cmd&quot;:&quot;cluster&quot;}&#39;</span><span class="p">}</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">values</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>&lt;Response [200]&gt;
@@ -13683,26 +13562,11 @@ Course policies can be found in the &lt;a href=&#34;syllabus.pdf&#34;&gt;syllabu
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">the_page</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">text</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">the_page</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>&lt;!doctype html&gt;&lt;html lang=&#34;en&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;UTF-8&#34;&gt;&lt;meta content=&#34;/images/branding/googleg/1x/googleg_standard_color_128dp.png&#34; itemprop=&#34;image&#34;&gt;&lt;title&gt;What&#39;s the meaning of life? - Google Search&lt;/title&gt;&lt;script nonce=&#34;qwhd1XQyVMIgaKaSDQplWA&#34;&gt;(function(){
@@ -13768,25 +13632,11 @@ a.tagName).toUpperCase()in k&amp;&amp;32==c)||((b=a.tagName in f)||(b=a.getAttri
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> <span class="n">the_page</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">16</span><span class="p">:</span><span class="mi">18</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[7]:</div>
-
 
 
 
@@ -13800,7 +13650,7 @@ a.tagName).toUpperCase()in k&amp;&amp;32==c)||((b=a.tagName in f)||(b=a.getAttri
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13809,28 +13659,11 @@ a.tagName).toUpperCase()in k&amp;&amp;32==c)||((b=a.tagName in f)||(b=a.getAttri
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;structureId&#39;</span> <span class="p">:</span> <span class="s1">&#39;1ycr&#39;</span><span class="p">}</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://www.pdb.org/pdb/explore/explore.do&#39;</span><span class="p">,</span><span class="n">values</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>&lt;!DOCTYPE html&gt;&lt;html lang=&#34;en&#34;&gt;&lt;head&gt;&lt;script src=&#34;https://www.googletagmanager.com/gtag/js?id=undefined&#34; async&gt;&lt;/script&gt;&lt;script&gt;//- global rcsb-config object
@@ -13963,7 +13796,7 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13973,39 +13806,14 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;q&#39;</span><span class="p">:</span><span class="s2">&quot;What&#39;s the meaning of life?&quot;</span><span class="p">}</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://www.google.com/search&#39;</span><span class="p">,</span><span class="n">values</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">url</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[10]:</div>
-
 
 
 
@@ -14018,7 +13826,7 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14027,29 +13835,13 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span><span class="o">,</span> <span class="nn">re</span>
-<span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://www.whatsmybrowser.org/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-<span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;You&amp;rsquo;re using (.*?)\.&#39;</span><span class="p">,</span><span class="n">page</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[11]:</div>
-
 
 
 
@@ -14064,26 +13856,11 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://www.whatsmybrowser.org/&#39;</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s1">&#39;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">text</span>
-<span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;You&amp;rsquo;re using (.*?)\.&#39;</span><span class="p">,</span><span class="n">page</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[12]:</div>
-
 
 
 
@@ -14104,7 +13881,7 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14123,7 +13900,7 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14155,7 +13932,7 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14182,7 +13959,7 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14212,7 +13989,7 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14237,31 +14014,13 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>\
-            <span class="s2">&quot;http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi&quot;</span><span class="p">,</span>\
-             <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;db&#39;</span><span class="p">:</span><span class="s1">&#39;gds&#39;</span><span class="p">,</span>\
-             <span class="s1">&#39;term&#39;</span><span class="p">:</span><span class="s1">&#39;human[Organism] AND 100:500[Number of Samples]&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">text</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[:</span><span class="mi">297</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;
@@ -14277,7 +14036,7 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14286,27 +14045,11 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="k">as</span> <span class="nn">ET</span>
-<span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span><span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>eSearchResult {}
@@ -14319,26 +14062,11 @@ RcsbFvWebApp.RcsbRequestContextManager.initializeArchesClient({
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Count
@@ -14355,27 +14083,13 @@ QueryTranslation
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;IdList&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[16]:</div>
-
 
 
 
@@ -14390,26 +14104,11 @@ QueryTranslation
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;IdList&#39;</span><span class="p">)]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>[&#39;200215868&#39;, &#39;200150736&#39;, &#39;200215421&#39;, &#39;200214846&#39;, &#39;200188309&#39;, &#39;200078160&#39;, &#39;200215127&#39;, &#39;200215126&#39;, &#39;200201359&#39;, &#39;200214940&#39;, &#39;200212666&#39;, &#39;200183279&#39;, &#39;200197265&#39;, &#39;200212217&#39;, &#39;200197388&#39;, &#39;200197386&#39;, &#39;200181554&#39;, &#39;200182409&#39;, &#39;200147123&#39;, &#39;200214137&#39;]
@@ -14422,25 +14121,11 @@ QueryTranslation
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;Id&#39;</span><span class="p">)</span> <span class="c1">#find only considers children</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[18]:</div>
-
 
 
 
@@ -14455,26 +14140,11 @@ QueryTranslation
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">elem</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s1">&#39;Id&#39;</span><span class="p">)]</span> <span class="c1">#iter considers the full tree</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>[&#39;200215868&#39;, &#39;200150736&#39;, &#39;200215421&#39;, &#39;200214846&#39;, &#39;200188309&#39;, &#39;200078160&#39;, &#39;200215127&#39;, &#39;200215126&#39;, &#39;200201359&#39;, &#39;200214940&#39;, &#39;200212666&#39;, &#39;200183279&#39;, &#39;200197265&#39;, &#39;200212217&#39;, &#39;200197388&#39;, &#39;200197386&#39;, &#39;200181554&#39;, &#39;200182409&#39;, &#39;200147123&#39;, &#39;200214137&#39;]
@@ -14485,7 +14155,7 @@ QueryTranslation
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14494,25 +14164,11 @@ QueryTranslation
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[:</span><span class="mi">297</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;
@@ -14530,27 +14186,11 @@ QueryTranslation
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
-<span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;Id&gt;(\d+)&lt;/Id&gt;&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>&lt;re.Match object; span=(257, 275), match=&#39;&lt;Id&gt;200215868&lt;/Id&gt;&#39;&gt;
@@ -14563,26 +14203,11 @@ QueryTranslation
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">regex</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">result</span><span class="p">)]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>[&#39;200215868&#39;, &#39;200150736&#39;, &#39;200215421&#39;, &#39;200214846&#39;, &#39;200188309&#39;, &#39;200078160&#39;, &#39;200215127&#39;, &#39;200215126&#39;, &#39;200201359&#39;, &#39;200214940&#39;, &#39;200212666&#39;, &#39;200183279&#39;, &#39;200197265&#39;, &#39;200212217&#39;, &#39;200197388&#39;, &#39;200197386&#39;, &#39;200181554&#39;, &#39;200182409&#39;, &#39;200147123&#39;, &#39;200214137&#39;]
@@ -14593,7 +14218,7 @@ QueryTranslation
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14604,38 +14229,14 @@ QueryTranslation
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:[</span><span class="mf">1.2</span><span class="p">,</span><span class="mf">1.3</span><span class="p">,</span><span class="mf">1.4</span><span class="p">]})</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[24]:</div>
-
 
 
 
@@ -14648,7 +14249,7 @@ QueryTranslation
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14659,26 +14260,11 @@ QueryTranslation
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://data.rcsb.org/rest/v1/core/entry/4hhb&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>{&#34;audit_author&#34;:[{&#34;name&#34;:&#34;Fermi, G.&#34;,&#34;pdbx_ordinal&#34;:1},{&#34;name&#34;:&#34;Perutz, M.F.&#34;,&#34;pdbx_ordinal&#34;:2}],&#34;cell&#34;:{&#34;angle_alpha&#34;:90.0,&#34;angle_beta&#34;:99.34,&#34;angle_gamma&#34;:90.0,&#34;length_a&#34;:63.15,&#34;length_b&#34;:83.59,&#34;length_c&#34;:53.8,&#34;zpdb&#34;:4},&#34;citation&#34;:[{&#34;country&#34;:&#34;UK&#34;,&#34;id&#34;:&#34;primary&#34;,&#34;journal_abbrev&#34;:&#34;J.Mol.Biol.&#34;,&#34;journal_id_astm&#34;:&#34;JMOBAK&#34;,&#34;journal_id_csd&#34;:&#34;0070&#34;,&#34;journal_id_issn&#34;:&#34;0022-2836&#34;,&#34;journal_volume&#34;:&#34;175&#34;,&#34;page_first&#34;:&#34;159&#34;,&#34;page_last&#34;:&#34;174&#34;,&#34;pdbx_database_id_doi&#34;:&#34;10.1016/0022-2836(84)90472-8&#34;,&#34;pdbx_database_id_pub_med&#34;:6726807,&#34;rcsb_authors&#34;:[&#34;Fermi, G.&#34;,&#34;Perutz, M.F.&#34;,&#34;Shaanan, B.&#34;,&#34;Fourme, R.&#34;],&#34;rcsb_is_primary&#34;:&#34;Y&#34;,&#34;rcsb_journal_abbrev&#34;:&#34;J Mol Biol&#34;,&#34;title&#34;:&#34;The crystal structure of human deoxyhaemoglobin at 1.74 A resolution&#34;,&#34;year&#34;:1984},{&#34;country&#34;:&#34;UK&#34;,&#34;id&#34;:&#34;1&#34;,&#34;journal_abbrev&#34;:&#34;Nature&#34;,&#34;journal_id_astm&#34;:&#34;NATUAS&#34;,&#34;journal_id_csd&#34;:&#34;0006&#34;,&#34;journal_id_issn&#34;:&#34;0028-0836&#34;,&#34;journal_volume&#34;:&#34;295&#34;,&#34;page_first&#34;:&#34;535&#34;,&#34;rcsb_authors&#34;:[&#34;Perutz, M.F.&#34;,&#34;Hasnain, S.S.&#34;,&#34;Duke, P.J.&#34;,&#34;Sessler, J.L.&#34;,&#34;Hahn, J.E.&#34;],&#34;rcsb_is_primary&#34;:&#34;N&#34;,&#34;rcsb_journal_abbrev&#34;:&#34;Nature&#34;,&#34;title&#34;:&#34;Stereochemistry of Iron in Deoxyhaemoglobin&#34;,&#34;year&#34;:1982},{&#34;country&#34;:&#34;US&#34;,&#34;id&#34;:&#34;3&#34;,&#34;journal_abbrev&#34;:&#34;Annu.Rev.Biochem.&#34;,&#34;journal_id_astm&#34;:&#34;ARBOAW&#34;,&#34;journal_id_csd&#34;:&#34;0413&#34;,&#34;journal_id_issn&#34;:&#34;0066-4154&#34;,&#34;journal_volume&#34;:&#34;48&#34;,&#34;page_first&#34;:&#34;327&#34;,&#34;rcsb_authors&#34;:[&#34;Perutz, M.F.&#34;],&#34;rcsb_is_primary&#34;:&#34;N&#34;,&#34;rcsb_journal_abbrev&#34;:&#34;Annu Rev Biochem&#34;,&#34;title&#34;:&#34;Regulation of Oxygen Affinity of Hemoglobin. Influence of Structure of the Globin on the Heme Iron&#34;,&#34;year&#34;:1979},{&#34;country&#34;:&#34;UK&#34;,&#34;id&#34;:&#34;4&#34;,&#34;journal_abbrev&#34;:&#34;J.Mol.Biol.&#34;,&#34;journal_id_astm&#34;:&#34;JMOBAK&#34;,&#34;journal_id_csd&#34;:&#34;0070&#34;,&#34;journal_id_issn&#34;:&#34;0022-2836&#34;,&#34;journal_volume&#34;:&#34;100&#34;,&#34;page_first&#34;:&#34;3&#34;,&#34;rcsb_authors&#34;:[&#34;Teneyck, L.F.&#34;,&#34;Arnone, A.&#34;],&#34;rcsb_is_primary&#34;:&#34;N&#34;,&#34;rcsb_journal_abbrev&#34;:&#34;J Mol Biol&#34;,&#34;title&#34;:&#34;Three-Dimensional Fourier Synthesis of Human Deoxyhemoglobin at 2.5 Angstroms Resolution, I.X-Ray Analysis&#34;,&#34;year&#34;:1976},{&#34;country&#34;:&#34;UK&#34;,&#34;id&#34;:&#34;5&#34;,&#34;journal_abbrev&#34;:&#34;J.Mol.Biol.&#34;,&#34;journal_id_astm&#34;:&#34;JMOBAK&#34;,&#34;journal_id_csd&#34;:&#34;0070&#34;,&#34;journal_id_issn&#34;:&#34;0022-2836&#34;,&#34;journal_volume&#34;:&#34;97&#34;,&#34;page_first&#34;:&#34;237&#34;,&#34;rcsb_authors&#34;:[&#34;Fermi, G.&#34;],&#34;rcsb_is_primary&#34;:&#34;N&#34;,&#34;rcsb_journal_abbrev&#34;:&#34;J Mol Biol&#34;,&#34;title&#34;:&#34;Three-Dimensional Fourier Synthesis of Human Deoxyhaemoglobin at 2.5 Angstroms Resolution, Refinement of the Atomic Model&#34;,&#34;year&#34;:1975},{&#34;country&#34;:&#34;UK&#34;,&#34;id&#34;:&#34;6&#34;,&#34;journal_abbrev&#34;:&#34;Nature&#34;,&#34;journal_id_astm&#34;:&#34;NATUAS&#34;,&#34;journal_id_csd&#34;:&#34;0006&#34;,&#34;journal_id_issn&#34;:&#34;0028-0836&#34;,&#34;journal_volume&#34;:&#34;228&#34;,&#34;page_first&#34;:&#34;516&#34;,&#34;rcsb_authors&#34;:[&#34;Muirhead, H.&#34;,&#34;Greer, J.&#34;],&#34;rcsb_is_primary&#34;:&#34;N&#34;,&#34;rcsb_journal_abbrev&#34;:&#34;Nature&#34;,&#34;title&#34;:&#34;Three-Dimensional Fourier Synthesis of Human Deoxyhaemoglobin at 3.5 Angstroms Resolution&#34;,&#34;year&#34;:1970},{&#34;book_publisher&#34;:&#34;Oxford University Press&#34;,&#34;id&#34;:&#34;2&#34;,&#34;journal_abbrev&#34;:&#34;Haemoglobin and Myoglobin. Atlas of Molecular Structures in Biology&#34;,&#34;journal_id_csd&#34;:&#34;0986&#34;,&#34;journal_id_issn&#34;:&#34;0-19-854706-4&#34;,&#34;journal_volume&#34;:&#34;2&#34;,&#34;rcsb_authors&#34;:[&#34;Fermi, G.&#34;,&#34;Perutz, M.F.&#34;],&#34;rcsb_is_primary&#34;:&#34;N&#34;,&#34;rcsb_journal_abbrev&#34;:&#34;Haemoglobin And Myoglobin Atlas Of Molecular Structures In Biology&#34;,&#34;year&#34;:1981},{&#34;book_publisher&#34;:&#34;National Biomedical Research Foundation, Silver Spring,Md.&#34;,&#34;id&#34;:&#34;7&#34;,&#34;journal_abbrev&#34;:&#34;Atlas of Protein Sequence and Structure (Data Section)&#34;,&#34;journal_id_csd&#34;:&#34;0435&#34;,&#34;journal_id_issn&#34;:&#34;0-912466-02-2&#34;,&#34;journal_volume&#34;:&#34;5&#34;,&#34;page_first&#34;:&#34;56&#34;,&#34;rcsb_is_primary&#34;:&#34;N&#34;,&#34;rcsb_journal_abbrev&#34;:&#34;Atlas Of Protein Sequence And Structure (data Section)&#34;,&#34;year&#34;:1972},{&#34;book_publisher&#34;:&#34;National Biomedical Research Foundation, Silver Spring,Md.&#34;,&#34;id&#34;:&#34;8&#34;,&#34;journal_abbrev&#34;:&#34;Atlas of Protein Sequence and Structure (Data Section)&#34;,&#34;journal_id_csd&#34;:&#34;0435&#34;,&#34;journal_id_issn&#34;:&#34;0-912466-02-2&#34;,&#34;journal_volume&#34;:&#34;5&#34;,&#34;page_first&#34;:&#34;64&#34;,&#34;rcsb_is_primary&#34;:&#34;N&#34;,&#34;rcsb_journal_abbrev&#34;:&#34;Atlas Of Protein Sequence And Structure (data Section)&#34;,&#34;year&#34;:1972}],&#34;diffrn&#34;:[{&#34;crystal_id&#34;:&#34;1&#34;,&#34;id&#34;:&#34;1&#34;}],&#34;entry&#34;:{&#34;id&#34;:&#34;4HHB&#34;},&#34;exptl&#34;:[{&#34;method&#34;:&#34;X-RAY DIFFRACTION&#34;}],&#34;exptl_crystal&#34;:[{&#34;density_matthews&#34;:2.26,&#34;density_percent_sol&#34;:45.48,&#34;id&#34;:&#34;1&#34;}],&#34;pdbx_audit_revision_category&#34;:[{&#34;category&#34;:&#34;atom_site&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:1,&#34;revision_ordinal&#34;:4},{&#34;category&#34;:&#34;database_PDB_caveat&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:2,&#34;revision_ordinal&#34;:4},{&#34;category&#34;:&#34;entity&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:3,&#34;revision_ordinal&#34;:4},{&#34;category&#34;:&#34;entity_name_com&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:4,&#34;revision_ordinal&#34;:4},{&#34;category&#34;:&#34;entity_src_gen&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:5,&#34;revision_ordinal&#34;:4},{&#34;category&#34;:&#34;pdbx_database_status&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:6,&#34;revision_ordinal&#34;:4},{&#34;category&#34;:&#34;pdbx_validate_rmsd_angle&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:7,&#34;revision_ordinal&#34;:4},{&#34;category&#34;:&#34;pdbx_validate_rmsd_bond&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:8,&#34;revision_ordinal&#34;:4},{&#34;category&#34;:&#34;struct_ref&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:9,&#34;revision_ordinal&#34;:4},{&#34;category&#34;:&#34;struct_ref_seq&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:10,&#34;revision_ordinal&#34;:4},{&#34;category&#34;:&#34;atom_site&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:11,&#34;revision_ordinal&#34;:5},{&#34;category&#34;:&#34;pdbx_validate_rmsd_angle&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:12,&#34;revision_ordinal&#34;:5},{&#34;category&#34;:&#34;pdbx_validate_rmsd_bond&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:13,&#34;revision_ordinal&#34;:5},{&#34;category&#34;:&#34;struct_site&#34;,&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:14,&#34;revision_ordinal&#34;:5}],&#34;pdbx_audit_revision_details&#34;:[{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;ordinal&#34;:1,&#34;provider&#34;:&#34;repository&#34;,&#34;revision_ordinal&#34;:1,&#34;type&#34;:&#34;Initial release&#34;}],&#34;pdbx_audit_revision_group&#34;:[{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Version format compliance&#34;,&#34;ordinal&#34;:1,&#34;revision_ordinal&#34;:2},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Advisory&#34;,&#34;ordinal&#34;:2,&#34;revision_ordinal&#34;:3},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Version format compliance&#34;,&#34;ordinal&#34;:3,&#34;revision_ordinal&#34;:3},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Advisory&#34;,&#34;ordinal&#34;:4,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Atomic model&#34;,&#34;ordinal&#34;:5,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Data collection&#34;,&#34;ordinal&#34;:6,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Database references&#34;,&#34;ordinal&#34;:7,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Other&#34;,&#34;ordinal&#34;:8,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Source and taxonomy&#34;,&#34;ordinal&#34;:9,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Structure summary&#34;,&#34;ordinal&#34;:10,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Atomic model&#34;,&#34;ordinal&#34;:11,&#34;revision_ordinal&#34;:5},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Data collection&#34;,&#34;ordinal&#34;:12,&#34;revision_ordinal&#34;:5},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;group&#34;:&#34;Derived calculations&#34;,&#34;ordinal&#34;:13,&#34;revision_ordinal&#34;:5}],&#34;pdbx_audit_revision_history&#34;:[{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;major_revision&#34;:1,&#34;minor_revision&#34;:0,&#34;ordinal&#34;:1,&#34;revision_date&#34;:&#34;1984-07-17T00:00:00+0000&#34;},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;major_revision&#34;:1,&#34;minor_revision&#34;:1,&#34;ordinal&#34;:2,&#34;revision_date&#34;:&#34;2008-03-03T00:00:00+0000&#34;},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;major_revision&#34;:1,&#34;minor_revision&#34;:2,&#34;ordinal&#34;:3,&#34;revision_date&#34;:&#34;2011-07-13T00:00:00+0000&#34;},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;major_revision&#34;:2,&#34;minor_revision&#34;:0,&#34;ordinal&#34;:4,&#34;revision_date&#34;:&#34;2020-06-17T00:00:00+0000&#34;},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;major_revision&#34;:3,&#34;minor_revision&#34;:0,&#34;ordinal&#34;:5,&#34;revision_date&#34;:&#34;2021-03-31T00:00:00+0000&#34;}],&#34;pdbx_audit_revision_item&#34;:[{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_atom_site.B_iso_or_equiv&#34;,&#34;ordinal&#34;:1,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_atom_site.Cartn_x&#34;,&#34;ordinal&#34;:2,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_atom_site.Cartn_y&#34;,&#34;ordinal&#34;:3,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_atom_site.Cartn_z&#34;,&#34;ordinal&#34;:4,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_entity.pdbx_description&#34;,&#34;ordinal&#34;:5,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_entity_src_gen.gene_src_common_name&#34;,&#34;ordinal&#34;:6,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_entity_src_gen.pdbx_beg_seq_num&#34;,&#34;ordinal&#34;:7,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_entity_src_gen.pdbx_end_seq_num&#34;,&#34;ordinal&#34;:8,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_entity_src_gen.pdbx_gene_src_gene&#34;,&#34;ordinal&#34;:9,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_entity_src_gen.pdbx_seq_type&#34;,&#34;ordinal&#34;:10,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_pdbx_database_status.process_site&#34;,&#34;ordinal&#34;:11,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_pdbx_validate_rmsd_angle.angle_deviation&#34;,&#34;ordinal&#34;:12,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_pdbx_validate_rmsd_angle.angle_value&#34;,&#34;ordinal&#34;:13,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_pdbx_validate_rmsd_bond.bond_deviation&#34;,&#34;ordinal&#34;:14,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_pdbx_validate_rmsd_bond.bond_value&#34;,&#34;ordinal&#34;:15,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_struct_ref.pdbx_align_begin&#34;,&#34;ordinal&#34;:16,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_struct_ref_seq.db_align_beg&#34;,&#34;ordinal&#34;:17,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_struct_ref_seq.db_align_end&#34;,&#34;ordinal&#34;:18,&#34;revision_ordinal&#34;:4},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_atom_site.B_iso_or_equiv&#34;,&#34;ordinal&#34;:19,&#34;revision_ordinal&#34;:5},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_atom_site.Cartn_x&#34;,&#34;ordinal&#34;:20,&#34;revision_ordinal&#34;:5},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_atom_site.Cartn_y&#34;,&#34;ordinal&#34;:21,&#34;revision_ordinal&#34;:5},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_atom_site.Cartn_z&#34;,&#34;ordinal&#34;:22,&#34;revision_ordinal&#34;:5},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_pdbx_validate_rmsd_bond.bond_deviation&#34;,&#34;ordinal&#34;:23,&#34;revision_ordinal&#34;:5},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_pdbx_validate_rmsd_bond.bond_value&#34;,&#34;ordinal&#34;:24,&#34;revision_ordinal&#34;:5},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_struct_site.pdbx_auth_asym_id&#34;,&#34;ordinal&#34;:25,&#34;revision_ordinal&#34;:5},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_struct_site.pdbx_auth_comp_id&#34;,&#34;ordinal&#34;:26,&#34;revision_ordinal&#34;:5},{&#34;data_content_type&#34;:&#34;Structure model&#34;,&#34;item&#34;:&#34;_struct_site.pdbx_auth_seq_id&#34;,&#34;ordinal&#34;:27,&#34;revision_ordinal&#34;:5}],&#34;pdbx_database_pdbobs_spr&#34;:[{&#34;date&#34;:&#34;1984-07-17T00:00:00+0000&#34;,&#34;id&#34;:&#34;SPRSDE&#34;,&#34;pdb_id&#34;:&#34;4HHB&#34;,&#34;replace_pdb_id&#34;:&#34;1HHB&#34;}],&#34;pdbx_database_related&#34;:[{&#34;content_type&#34;:&#34;unspecified&#34;,&#34;db_id&#34;:&#34;2HHB&#34;,&#34;db_name&#34;:&#34;PDB&#34;,&#34;details&#34;:&#34;REFINED BY THE METHOD OF JACK AND LEVITT.  THIS\n        ENTRY PRESENTS THE BEST ESTIMATE OF THE\n        COORDINATES.&#34;},{&#34;content_type&#34;:&#34;unspecified&#34;,&#34;db_id&#34;:&#34;3HHB&#34;,&#34;db_name&#34;:&#34;PDB&#34;,&#34;details&#34;:&#34;SYMMETRY AVERAGED ABOUT THE (NON-CRYSTALLOGRAPHIC)\n        MOLECULAR AXIS AND THEN RE-REGULARIZED BY THE\n        ENERGY REFINEMENT METHOD OF LEVITT.  THIS ENTRY\n        PRESENTS COORDINATES THAT ARE ADEQUATE FOR MOST\n        PURPOSES, SUCH AS COMPARISON WITH OTHER STRUCTURES.&#34;},{&#34;content_type&#34;:&#34;unspecified&#34;,&#34;db_id&#34;:&#34;1GLI&#34;,&#34;db_name&#34;:&#34;PDB&#34;}],&#34;pdbx_database_status&#34;:{&#34;pdb_format_compatible&#34;:&#34;Y&#34;,&#34;process_site&#34;:&#34;BNL&#34;,&#34;recvd_initial_deposition_date&#34;:&#34;1984-03-07T00:00:00+0000&#34;,&#34;status_code&#34;:&#34;REL&#34;},&#34;pdbx_vrpt_summary&#34;:{&#34;pdb_r&#34;:0.14,&#34;absolute_percentile_clashscore&#34;:0.0,&#34;absolute_percentile_percent_ramachandran_outliers&#34;:12.8,&#34;absolute_percentile_percent_rotamer_outliers&#34;:9.9,&#34;angles_rmsz&#34;:7.11,&#34;attempted_validation_steps&#34;:&#34;molprobity,validation-pack,mogul,buster-report,percentiles,writexml&#34;,&#34;bonds_rmsz&#34;:9.69,&#34;clashscore&#34;:141.0,&#34;high_resol_relative_percentile_clashscore&#34;:1.72,&#34;high_resol_relative_percentile_percent_ramachandran_outliers&#34;:1.72,&#34;high_resol_relative_percentile_percent_rotamer_outliers&#34;:1.72,&#34;ligands_for_buster_report&#34;:&#34;yes&#34;,&#34;low_resol_relative_percentile_clashscore&#34;:1.76,&#34;low_resol_relative_percentile_percent_ramachandran_outliers&#34;:1.76,&#34;low_resol_relative_percentile_percent_rotamer_outliers&#34;:1.76,&#34;num_hreduce&#34;:4456.0,&#34;num_pdbids_absolute_percentile_clashscore&#34;:141614,&#34;num_pdbids_absolute_percentile_percent_ramachandran_outliers&#34;:138981,&#34;num_pdbids_absolute_percentile_percent_rotamer_outliers&#34;:138945,&#34;num_pdbids_relative_percentile_clashscore&#34;:3923,&#34;num_pdbids_relative_percentile_percent_ramachandran_outliers&#34;:3878,&#34;num_pdbids_relative_percentile_percent_rotamer_outliers&#34;:3878,&#34;num_angles_rmsz&#34;:6114,&#34;num_bonds_rmsz&#34;:4500,&#34;percent_ramachandran_outliers&#34;:1.24,&#34;percent_rotamer_outliers&#34;:8.66,&#34;percentilebins&#34;:[&#34;all&#34;,&#34;1.74&#34;,&#34;xray&#34;],&#34;protein_dnarnaentities&#34;:&#34;1,2&#34;,&#34;relative_percentile_clashscore&#34;:0.0,&#34;relative_percentile_percent_ramachandran_outliers&#34;:2.6,&#34;relative_percentile_percent_rotamer_outliers&#34;:1.1,&#34;report_creation_date&#34;:&#34;Mar 23, 2021 -- 08:01 PM EDT&#34;,&#34;restypes_notchecked_for_bond_angle_geometry&#34;:[&#34;HEM&#34;,&#34;PO4&#34;],&#34;pdbdeposition_date&#34;:&#34;1984-03-07T00:00:00+0000&#34;,&#34;pdbresolution&#34;:1.74,&#34;pdbrevision_date&#34;:&#34;2021-03-31T00:00:00+0000&#34;,&#34;pdbrevision_number&#34;:5.0},&#34;rcsb_accession_info&#34;:{&#34;deposit_date&#34;:&#34;1984-03-07T00:00:00+0000&#34;,&#34;has_released_experimental_data&#34;:&#34;N&#34;,&#34;initial_release_date&#34;:&#34;1984-07-17T00:00:00+0000&#34;,&#34;major_revision&#34;:3,&#34;minor_revision&#34;:0,&#34;revision_date&#34;:&#34;2021-03-31T00:00:00+0000&#34;,&#34;status_code&#34;:&#34;REL&#34;},&#34;rcsb_entry_container_identifiers&#34;:{&#34;assembly_ids&#34;:[&#34;1&#34;],&#34;entity_ids&#34;:[&#34;1&#34;,&#34;2&#34;,&#34;3&#34;,&#34;4&#34;,&#34;5&#34;],&#34;entry_id&#34;:&#34;4HHB&#34;,&#34;model_ids&#34;:[1],&#34;non_polymer_entity_ids&#34;:[&#34;3&#34;,&#34;4&#34;],&#34;polymer_entity_ids&#34;:[&#34;1&#34;,&#34;2&#34;],&#34;rcsb_id&#34;:&#34;4HHB&#34;,&#34;pubmed_id&#34;:6726807},&#34;rcsb_entry_info&#34;:{&#34;assembly_count&#34;:1,&#34;branched_entity_count&#34;:0,&#34;cis_peptide_count&#34;:0,&#34;deposited_atom_count&#34;:4779,&#34;deposited_hydrogen_atom_count&#34;:0,&#34;deposited_model_count&#34;:1,&#34;deposited_modeled_polymer_monomer_count&#34;:574,&#34;deposited_nonpolymer_entity_instance_count&#34;:6,&#34;deposited_polymer_entity_instance_count&#34;:4,&#34;deposited_polymer_monomer_count&#34;:574,&#34;deposited_solvent_atom_count&#34;:221,&#34;deposited_unmodeled_polymer_monomer_count&#34;:0,&#34;disulfide_bond_count&#34;:0,&#34;entity_count&#34;:5,&#34;experimental_method&#34;:&#34;X-ray&#34;,&#34;experimental_method_count&#34;:1,&#34;inter_mol_covalent_bond_count&#34;:0,&#34;inter_mol_metalic_bond_count&#34;:4,&#34;molecular_weight&#34;:64.74,&#34;na_polymer_entity_types&#34;:&#34;Other&#34;,&#34;nonpolymer_bound_components&#34;:[&#34;HEM&#34;],&#34;nonpolymer_entity_count&#34;:2,&#34;nonpolymer_molecular_weight_maximum&#34;:0.62,&#34;nonpolymer_molecular_weight_minimum&#34;:0.09,&#34;polymer_composition&#34;:&#34;heteromeric protein&#34;,&#34;polymer_entity_count&#34;:2,&#34;polymer_entity_count_dna&#34;:0,&#34;polymer_entity_count_rna&#34;:0,&#34;polymer_entity_count_nucleic_acid&#34;:0,&#34;polymer_entity_count_nucleic_acid_hybrid&#34;:0,&#34;polymer_entity_count_protein&#34;:2,&#34;polymer_entity_taxonomy_count&#34;:2,&#34;polymer_molecular_weight_maximum&#34;:15.89,&#34;polymer_molecular_weight_minimum&#34;:15.15,&#34;polymer_monomer_count_maximum&#34;:146,&#34;polymer_monomer_count_minimum&#34;:141,&#34;resolution_combined&#34;:[1.74],&#34;selected_polymer_entity_types&#34;:&#34;Protein (only)&#34;,&#34;solvent_entity_count&#34;:1,&#34;structure_determination_methodology&#34;:&#34;experimental&#34;,&#34;structure_determination_methodology_priority&#34;:10,&#34;diffrn_resolution_high&#34;:{&#34;provenance_source&#34;:&#34;From refinement resolution cutoff&#34;,&#34;value&#34;:1.74}},&#34;rcsb_primary_citation&#34;:{&#34;country&#34;:&#34;UK&#34;,&#34;id&#34;:&#34;primary&#34;,&#34;journal_abbrev&#34;:&#34;J.Mol.Biol.&#34;,&#34;journal_id_astm&#34;:&#34;JMOBAK&#34;,&#34;journal_id_csd&#34;:&#34;0070&#34;,&#34;journal_id_issn&#34;:&#34;0022-2836&#34;,&#34;journal_volume&#34;:&#34;175&#34;,&#34;page_first&#34;:&#34;159&#34;,&#34;page_last&#34;:&#34;174&#34;,&#34;pdbx_database_id_doi&#34;:&#34;10.1016/0022-2836(84)90472-8&#34;,&#34;pdbx_database_id_pub_med&#34;:6726807,&#34;rcsb_orcididentifiers&#34;:[&#34;?&#34;,&#34;?&#34;,&#34;?&#34;,&#34;?&#34;],&#34;rcsb_authors&#34;:[&#34;Fermi, G.&#34;,&#34;Perutz, M.F.&#34;,&#34;Shaanan, B.&#34;,&#34;Fourme, R.&#34;],&#34;rcsb_journal_abbrev&#34;:&#34;J Mol Biol&#34;,&#34;title&#34;:&#34;The crystal structure of human deoxyhaemoglobin at 1.74 A resolution&#34;,&#34;year&#34;:1984},&#34;refine&#34;:[{&#34;details&#34;:&#34;THE COORDINATES GIVEN HERE ARE IN THE ORTHOGONAL ANGSTROM\nSYSTEM STANDARD FOR HEMOGLOBINS. THE Y AXIS IS THE\n(NON CRYSTALLOGRAPHIC) MOLECULAR DIAD AND THE X AXIS IS THE\nPSEUDO DIAD WHICH RELATES THE ALPHA-1 AND BETA-1 CHAINS.\nTHE TRANSFORMATION GIVEN IN THE *MTRIX* RECORDS BELOW\nWILL GENERATE COORDINATES FOR THE *C* AND *D* CHAINS FROM\nTHE *A* AND *B* CHAINS RESPECTIVELY.&#34;,&#34;ls_rfactor_rwork&#34;:0.135,&#34;ls_dres_high&#34;:1.74,&#34;pdbx_diffrn_id&#34;:[&#34;1&#34;],&#34;pdbx_refine_id&#34;:&#34;X-RAY DIFFRACTION&#34;}],&#34;refine_hist&#34;:[{&#34;cycle_id&#34;:&#34;LAST&#34;,&#34;d_res_high&#34;:1.74,&#34;number_atoms_solvent&#34;:221,&#34;number_atoms_total&#34;:4779,&#34;pdbx_number_atoms_ligand&#34;:174,&#34;pdbx_number_atoms_nucleic_acid&#34;:0,&#34;pdbx_number_atoms_protein&#34;:4384,&#34;pdbx_refine_id&#34;:&#34;X-RAY DIFFRACTION&#34;}],&#34;struct&#34;:{&#34;pdbx_descriptor&#34;:&#34;HEMOGLOBIN (DEOXY)&#34;,&#34;title&#34;:&#34;THE CRYSTAL STRUCTURE OF HUMAN DEOXYHAEMOGLOBIN AT 1.74 ANGSTROMS RESOLUTION&#34;},&#34;struct_keywords&#34;:{&#34;pdbx_keywords&#34;:&#34;OXYGEN TRANSPORT&#34;,&#34;text&#34;:&#34;OXYGEN TRANSPORT&#34;},&#34;symmetry&#34;:{&#34;int_tables_number&#34;:4,&#34;space_group_name_hm&#34;:&#34;P 1 21 1&#34;},&#34;rcsb_id&#34;:&#34;4HHB&#34;}
@@ -14689,28 +14275,13 @@ QueryTranslation
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pdbinfo</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-<span class="n">pdbinfo</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[26]:</div>
-
 
 
 
@@ -15247,25 +14818,11 @@ QueryTranslation
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pdbinfo</span><span class="p">[</span><span class="s1">&#39;rcsb_entry_info&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[27]:</div>
-
 
 
 
@@ -15320,28 +14877,13 @@ QueryTranslation
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://data.rcsb.org/rest/v1/core/polymer_entity/4hhb/1&#39;</span><span class="p">)</span>
-<span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[28]:</div>
-
 
 
 
@@ -16658,28 +16200,13 @@ QueryTranslation
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://data.rcsb.org/rest/v1/core/polymer_entity_instance/4HHB/A&#39;</span><span class="p">)</span>
-<span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt output_prompt">Out[29]:</div>
-
 
 
 
@@ -18388,7 +17915,7 @@ QueryTranslation
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -18410,7 +17937,7 @@ QueryTranslation
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -18431,84 +17958,8 @@ QueryTranslation
 
 </div>
 </div>
-</div>
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;webblast&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 500px&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;link rel=&quot;stylesheet&quot; href=&quot;http://bits.csb.pitt.edu/asker.js/themes/asker.default.css&quot; /&gt;&#39;</span><span class="p">);</span>
-
-    <span class="kd">var</span> <span class="nx">divid</span> <span class="o">=</span> <span class="s1">&#39;#webblast&#39;</span><span class="p">;</span>
-	<span class="nx">jQuery</span><span class="p">(</span><span class="nx">divid</span><span class="p">).</span><span class="nx">asker</span><span class="p">({</span>
-	    <span class="nx">id</span><span class="o">:</span> <span class="nx">divid</span><span class="p">,</span>
-	    <span class="nx">question</span><span class="o">:</span> <span class="s2">&quot;When making a BLAST request with a long sequence, which HTTP request type should you use?&quot;</span><span class="p">,</span>
-		<span class="nx">answers</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span><span class="s1">&#39;REQUEST&#39;</span><span class="p">,</span><span class="s1">&#39;Does not matter&#39;</span><span class="p">],</span>
-        <span class="nx">server</span><span class="o">:</span> <span class="s2">&quot;http://bits.csb.pitt.edu/asker.js/example/asker.cgi&quot;</span><span class="p">,</span>
-		<span class="nx">charter</span><span class="o">:</span> <span class="nx">chartmaker</span><span class="p">})</span>
-    
-<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.jp-InputArea .o:contains(html)&quot;</span><span class="p">).</span><span class="nx">closest</span><span class="p">(</span><span class="s1">&#39;.jp-InputArea&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
-
-
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<div id="webblast" style="width: 500px"></div>
-<script>
-$('head').append('<link rel="stylesheet" href="http://bits.csb.pitt.edu/asker.js/themes/asker.default.css" />');
-
-    var divid = '#webblast';
-	jQuery(divid).asker({
-	    id: divid,
-	    question: "When making a BLAST request with a long sequence, which HTTP request type should you use?",
-		answers: ['GET','POST','REQUEST','Does not matter'],
-        server: "http://bits.csb.pitt.edu/asker.js/example/asker.cgi",
-		charter: chartmaker})
-    
-$(".jp-InputArea .o:contains(html)").closest('.jp-InputArea').hide();
-
-
-</script>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;https://www.ncbi.nlm.nih.gov/blast/Blast.cgi&#39;</span><span class="p">,</span>\
-                        <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;CMD&#39;</span><span class="p">:</span> <span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;DATABASE&#39;</span><span class="p">:</span> <span class="s1">&#39;nr&#39;</span><span class="p">,</span> <span class="s1">&#39;PROGRAM&#39;</span><span class="p">:</span><span class="s1">&#39;blastp&#39;</span><span class="p">,</span> \
-                              <span class="s1">&#39;QUERY&#39;</span><span class="p">:</span> <span class="s1">&#39;SQETFSDLWKLLPEN&#39;</span><span class="p">})</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
@@ -18518,27 +17969,13 @@ $(".jp-InputArea .o:contains(html)").closest('.jp-InputArea').hide();
 
 </div>
 </div>
-</div>
+</div></div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD XHTML 1.0 Transitional//EN&#34; &#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&#34;&gt;
@@ -19352,7 +18789,7 @@ QBlastInfoEnd
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -19375,26 +18812,11 @@ QBlastInfoEnd
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rid</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;RID = (\S+)&#39;</span><span class="p">,</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">rid</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>NDG20ZRN016
@@ -19405,40 +18827,16 @@ QBlastInfoEnd
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://www.ncbi.nlm.nih.gov/blast/Blast.cgi?CMD=GET&amp;RID=</span><span class="si">%s</span><span class="s1">&amp;FORMAT_TYPE=XML&#39;</span> <span class="o">%</span> <span class="n">rid</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD XHTML 1.0 Transitional//EN&#34; &#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&#34;&gt;
@@ -19836,15 +19234,7 @@ QBlastInfoEnd
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Exercise:-Anything-new?">Exercise: Anything new?<a class="anchor-link" href="#Exercise:-Anything-new?">&#182;</a></h1><p>Write a script to see if a website has changed since the last time you checked.  The script will  save the text of the website in the current directory and compare the previously saved text to the current website.</p>
-
-</div>
-</div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -19855,72 +19245,14 @@ QBlastInfoEnd
 
 </div>
 </div>
-</div>
+</div><aside class="notes">
+
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span><span class="o">,</span><span class="nn">re</span><span class="o">,</span><span class="nn">sys</span><span class="o">,</span><span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="k">as</span> <span class="nn">ET</span>
-
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-	<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Need fasta file&quot;</span><span class="p">)</span>
-	<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">fasta</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
-<span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;CMD&#39;</span><span class="p">:</span> <span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;DATABASE&#39;</span><span class="p">:</span><span class="s1">&#39;pdb&#39;</span><span class="p">,</span> <span class="s1">&#39;PROGRAM&#39;</span><span class="p">:</span> <span class="s1">&#39;blastp&#39;</span><span class="p">,</span><span class="s1">&#39;QUERY&#39;</span><span class="p">:</span><span class="n">fasta</span><span class="p">,</span> <span class="s1">&#39;PROGRAM_NAME&#39;</span><span class="p">:</span><span class="s1">&#39;blastp&#39;</span><span class="p">,</span><span class="s1">&#39;BLAST_PROGRAM&#39;</span><span class="p">:</span><span class="s1">&#39;blastp&#39;</span><span class="p">}</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://www.ncbi.nlm.nih.gov/blast/Blast.cgi&#39;</span><span class="p">,</span><span class="n">values</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">text</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;RID = (\S+)&#39;</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
-
-<span class="n">rid</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;Status=WAITING&#39;</span>
-<span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;CMD&#39;</span><span class="p">:</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;RID&#39;</span><span class="p">:</span> <span class="n">rid</span><span class="p">,</span> <span class="s1">&#39;FORMAT_TYPE&#39;</span><span class="p">:</span><span class="s1">&#39;XML&#39;</span><span class="p">}</span>
-<span class="k">while</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Status=WAITING&#39;</span><span class="p">,</span><span class="n">result</span><span class="p">):</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://www.ncbi.nlm.nih.gov/blast/Blast.cgi&#39;</span><span class="p">,</span><span class="n">values</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">text</span>
-    <span class="c1">#print(result)</span>
-    <span class="c1">#print(res.url)</span>
-
-<span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-<span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="c1">#print out some summary information from the hits</span>
-<span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s1">&#39;Hit&#39;</span><span class="p">):</span>
-	<span class="n">hsp</span> <span class="o">=</span> <span class="n">hit</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Hit_hsps&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Hsp&#39;</span><span class="p">)</span>
-	<span class="n">evalue</span> <span class="o">=</span> <span class="n">hsp</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Hsp_evalue&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-	<span class="n">ident</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">hsp</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Hsp_identity&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-	<span class="n">length</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">hsp</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Hsp_align-len&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-	<span class="n">pdb_ch</span> <span class="o">=</span> <span class="n">hit</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Hit_accession&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
-	<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\S+)_&#39;</span><span class="p">,</span> <span class="n">pdb_ch</span><span class="p">)</span>
-	<span class="n">resolution</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span>
-	<span class="k">if</span> <span class="n">m</span><span class="p">:</span>
-		<span class="n">pdb</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-		<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://www.pdb.org/pdb/rest/describePDB&#39;</span><span class="p">,{</span><span class="s1">&#39;structureId&#39;</span><span class="p">:</span> <span class="n">pdb</span><span class="p">})</span><span class="o">.</span><span class="n">text</span>
-		<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;resolution=&quot;(\S+)&quot;&#39;</span><span class="p">,</span><span class="n">response</span><span class="p">)</span>
-		<span class="k">if</span> <span class="n">m</span><span class="p">:</span>
-			<span class="n">resolution</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-	<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%.2f</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pdb_ch</span><span class="p">,</span> <span class="n">evalue</span><span class="p">,</span> <span class="n">ident</span><span class="o">/</span><span class="n">length</span><span class="p">,</span><span class="n">resolution</span><span class="p">))</span>
-	<span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
-	<span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
-		<span class="k">break</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
 
 <div class="output_subarea output_text output_error">
 <pre>
@@ -19941,11 +19273,74 @@ QBlastInfoEnd
 </div>
 
 </div>
-    </div>
-  </div>
-</body>
+</aside></section></section>
+</div>
+</div>
 
- 
+<script>
+
+require(
+    {
+      // it makes sense to wait a little bit when you are loading
+      // reveal from a cdn in a slow connection environment
+      waitSeconds: 15
+    },
+    [
+      "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/lib/js/head.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/js/reveal.js"
+    ],
+
+    function(head, Reveal){
+
+        // Full list of configuration options available here: https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+
+            transition: "slide",
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/lib/js/classList.js",
+                  condition: function() { return !document.body.classList; } },
+                { src: "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/plugin/notes/notes.js",
+                  async: true,
+                  condition: function() { return !!document.body.classList; } }
+            ]
+        });
+
+        var update = function(event){
+          if(MathJax.Hub.getAllJax(Reveal.getCurrentSlide())){
+            MathJax.Hub.Rerender(Reveal.getCurrentSlide());
+          }
+        };
+
+        Reveal.addEventListener('slidechanged', update);
+
+        function setScrollingSlide() {
+            var scroll = false
+            if (scroll === true) {
+              var h = $('.reveal').height() * 0.95;
+              $('section.present').find('section')
+                .filter(function() {
+                  return $(this).height() > h;
+                })
+                .css('height', 'calc(95vh)')
+                .css('overflow-y', 'scroll')
+                .css('margin-top', '20px');
+            }
+        }
+
+        // check and set the scrolling slide every time the slide change
+        Reveal.addEventListener('slidechanged', setScrollingSlide);
+
+    }
+
+);
+</script>
+
+</body>
 
 
 </html>
